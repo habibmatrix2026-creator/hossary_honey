@@ -36,4 +36,4 @@ RUN mkdir -p storage/framework/{cache,sessions,views} bootstrap/cache \
 
 EXPOSE 8080
 
-CMD php artisan migrate --force && frankenphp php-server -r public -p 8080
+CMD php artisan migrate --force && frankenphp php-server --root public --listen :8080
