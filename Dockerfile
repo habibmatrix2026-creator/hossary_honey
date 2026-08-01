@@ -18,10 +18,15 @@ COPY . .
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
-    && apt-get install -y nodejs
+# Install Node.js 22
+RUN apt-get update \
+    && apt-get install -y curl ca-certificates gnupg \
+    && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
+    && node -v \
+    && npm -v
 
-RUN npm install
+RUN npm ci
 RUN npm run build
 
 RUN php artisan storage:link || true
