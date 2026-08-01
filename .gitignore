@@ -29,3 +29,4 @@ Thumbs.db
 **/.vs/
 *.suo
 *.sqlite
+*.zip

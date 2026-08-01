@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="adminHMD professional admin dashboard template">
-  <title>Dashboard | adminHMD</title>
+  <title>admin</title>
 @livewireStyles
   <link rel="stylesheet" href="{{ asset('admin/assets/css/bootstrap.min.css')}} ">
   <link rel="stylesheet" href="{{ asset('admin/assets/vendors/bootstrap-icons/bootstrap-icons.css') }}">
@@ -42,8 +42,8 @@
 
     @yield('content')
       <footer class="admin-footer">
-        <div class="container-fluid px-3 px-lg-4">
-         
+        <div class="px-3 container-fluid px-lg-4">
+
         </div>
       </footer>
     </div>
