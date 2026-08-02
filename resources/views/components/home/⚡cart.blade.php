@@ -64,17 +64,21 @@ new class extends Component
         $message.="رقم الطلبية ".$order->id."\n";
        foreach($cart as $item)
         {
+$price = $item->weight == 400
+    ? $item->product->price1
+    : $item->product->price;
             OrderItem::create([
              'order_id' => $order->id,
              'product_id' => $item->product_id,
-             'price' => $item->weight==400? $item->product->price1 : $item->product->price,
+             'price' => $price,
              'quantity' => $item->quantity,
+             'weight'     => $item->weight,
             ]);
         $message .= "المنتج: " . $item->product->title . "\n";
         $message .= "الكمية: " . $item->quantity . "\n";
         $message .= "الوزن: " . $item->weight . "\n";
-        $message .= " السعر للمنتج الواحد". $item->weight==400? $item->product->price1 : $item->product->price. " $\n";
-        $message .= " السعر الاجمالي لهذا المنتج ". ($item->quantity * ($item->weight==400? $item->product->price1 : $item->product->price)) . " $\n";
+        $message .= " السعر للمنتج الواحد".$price. " $\n";
+        $message .= " السعر الاجمالي لهذا المنتج ". ($item->quantity * $price) . " $\n";
         $message .= "------------------\n";
             $item->delete();
         }
