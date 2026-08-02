@@ -67,13 +67,14 @@ new class extends Component
             OrderItem::create([
              'order_id' => $order->id,
              'product_id' => $item->product_id,
-             'price' => $item->weight==800? $item->product->price : $item->product->price1,
+             'price' => $item->weight==400? $item->product->price1 : $item->product->price,
              'quantity' => $item->quantity,
             ]);
         $message .= "المنتج: " . $item->product->title . "\n";
         $message .= "الكمية: " . $item->quantity . "\n";
-        $message .= " السعر للمنتج الواحد". $item->weight==800? $item->product->price : $item->product->price1. " $\n";
-        $message .= " السعر الاجمالي لهذا المنتج ". ($item->quantity * ($item->weight==800? $item->product->price : $item->product->price1)) . " $\n";
+        $message .= "الوزن: " . $item->weight . "\n";
+        $message .= " السعر للمنتج الواحد". $item->weight==400? $item->product->price1 : $item->product->price. " $\n";
+        $message .= " السعر الاجمالي لهذا المنتج ". ($item->quantity * ($item->weight==400? $item->product->price1 : $item->product->price)) . " $\n";
         $message .= "------------------\n";
             $item->delete();
         }
@@ -117,7 +118,8 @@ new class extends Component
                 </div>
                     <div class="item-info">
                         <div class="item-name">{{ $c->product->title }}</div>
-                        <div class="item-price">{{($c->weight==800)? $c->product->price:$c->product->price1." $"}}</div>
+                        <div class="item-price">{{($c->weight==400)? $c->product->price1:$c->product->price." $"}}</div>
+                        <div class="item-price">{{ $c->weight." غرام" }}</div>
                     </div>
                 </div>
                 <div class="quantity-controls">
@@ -127,20 +129,20 @@ new class extends Component
                 </div>
                 <div class="item-total-section">
                     <span class="item-total-price">
-                        @if($c->weight==800)
-                    {{ $c->quantity*$c->product->price." $" }}
-                    @else
+                        @if($c->weight==400)
                     {{ $c->quantity*$c->product->price1." $" }}
+                    @else
+                    {{ $c->quantity*$c->product->price." $" }}
                     @endif
                 </span>
                     <button class="remove-btn" wire:click="delete({{ $c->id }})">Remove</button>
                 </div>
             </div>
             @php
-            if($c->weight==800)
-            $total+=($c->quantity*$c->product->price);
-            else
+            if($c->weight==400)
             $total+=($c->quantity*$c->product->price1);
+            else
+            $total+=($c->quantity*$c->product->price);
             @endphp
            @endforeach
 

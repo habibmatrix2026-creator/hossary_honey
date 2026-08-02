@@ -47,6 +47,7 @@ new class extends Component
        $this->validate([
         "quantity.$product_id"=>['required', 'integer', 'min:1']
        ]);
+       $check_price1=Product::where("id",$product_id)->first();
        $cartItem = Cart::where('product_id',$product_id)->where("user_id",Auth::id())
        ->where("weight",$weight)->first();
        if(!$cartItem)
@@ -56,7 +57,7 @@ new class extends Component
          'user_id' => Auth::id(),
         'product_id' => $product_id,
         'quantity' => $this->quantity[$product_id],
-        'weight'     => $this->selectedWeight[$product_id]??800,
+        'weight'     => $check_price1->price1?($this->selectedWeight[$product_id]??800):1,
             ]
             );
         }
@@ -135,7 +136,8 @@ public function getPrice($productId, $weight)
                                 @endif
 
                             </div>
-                              <div>
+                            @if ($p->price1)
+ <div>
                                 <button
     class="hbfiltbtn {{ ($selectedWeight[$p->id] ?? 800) == 800 ? 'active' : '' }}"
     wire:click="getPrice({{ $p->id }},800)">
@@ -148,6 +150,8 @@ public function getPrice($productId, $weight)
     400g
 </button>
                               </div>
+                            @endif
+
                               <div>
                                   <input type="number"
                             placeholder="الكمية" min="1"

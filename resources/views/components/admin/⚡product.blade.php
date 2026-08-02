@@ -47,7 +47,7 @@ new class extends Component
         'category_id'       =>$this->category_id,
         'details'       =>trim($this->details),
         'price'       =>trim($this->price),
-        'price1'       =>trim($this->price1),
+        'price1'       => empty($this->price1) ? null : trim($this->price1),
         'image'       =>$path,
       ]);
        session()->flash("success","$this->title add successfully");
@@ -92,7 +92,7 @@ new class extends Component
         $product->title = $this->title;
         $product->details = $this->details;
         $product->price = $this->price;
-         $product->price1 = $this->price1;
+         $product->price1 = empty($this->price1) ? null : trim($this->price1);
         $product->category_id = $this->category_id;
         if($this->image)
         $product->image = $this->image->store("photos",'public');
@@ -171,7 +171,7 @@ new class extends Component
 
                  <div >
                     <label class="form-label" for="price">price for small if located</label>
-                    <input class="form-control" id="price" type="text" required wire:model="price1">
+                    <input class="form-control" id="price" type="text"  wire:model="price1">
                     @error("price1")
                     <div class="text-danger">{{$message}}</div>
                     @enderror
