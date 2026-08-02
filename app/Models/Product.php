@@ -12,6 +12,7 @@ class Product extends Model
         'category_id',
         'details',
         'price',
+        'price1',
         'stock',
         'image',
     ];
@@ -21,7 +22,7 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-  
+
 
     public function carts(): HasMany
     {

@@ -7,7 +7,7 @@ new class extends Component
     //
     use WithFileUploads;
     public $is_id=null;
-    public $title,$category_id,$details,$image,$price,$currency_id;
+    public $title,$category_id,$details,$image,$price,$price1,$currency_id;
     public $product,$query="";
     //start loadProducts function
     public function loadProducts()
@@ -36,6 +36,7 @@ new class extends Component
     'category_id' => 'required|exists:categories,id',
     'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
     'price' => 'required|numeric|min:0',
+    'price1' => 'nullable|numeric|min:0',
             ]
             );
      $path=null;
@@ -46,11 +47,12 @@ new class extends Component
         'category_id'       =>$this->category_id,
         'details'       =>trim($this->details),
         'price'       =>trim($this->price),
+        'price1'       =>trim($this->price1),
         'image'       =>$path,
       ]);
        session()->flash("success","$this->title add successfully");
        $this->loadProducts();
-       $this->reset('title','category_id',"details","price","image");
+       $this->reset('title','category_id',"details","price",'price1',"image");
     }
     //end save function
     //start reset session function
@@ -72,6 +74,7 @@ new class extends Component
         $this->title= $product->title;
         $this->details= $product->details;
         $this->price= $product->price;
+        $this->price1= $product->price1;
         $this->category_id= $product->category_id;
     }
     //end edit function
@@ -83,18 +86,20 @@ new class extends Component
     'category_id' => 'required|exists:categories,id',
     'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
     'price' => 'required|numeric|min:0',
+    'price1' => 'nullable|numeric|min:0',
         ]);
         $product = Product::findOrFail( $this->is_id );
         $product->title = $this->title;
         $product->details = $this->details;
         $product->price = $this->price;
+         $product->price1 = $this->price1;
         $product->category_id = $this->category_id;
         if($this->image)
         $product->image = $this->image->store("photos",'public');
         $product->save();
      session()->flash("success","$this->title updated successfully");
        $this->loadProducts();
-       $this->reset('title','category_id',"details","price","image","is_id");
+       $this->reset('title','category_id',"details","price","price1","image","is_id");
     }
    //end update function
 };
@@ -158,8 +163,16 @@ new class extends Component
                 </div>
                 <div >
                     <label class="form-label" for="price">price</label>
-                    <input class="form-control" id="price" type="number" required wire:model="price">
+                    <input class="form-control" id="price" type="text" required wire:model="price">
                     @error("price")
+                    <div class="text-danger">{{$message}}</div>
+                    @enderror
+                </div>
+
+                 <div >
+                    <label class="form-label" for="price">price for small if located</label>
+                    <input class="form-control" id="price" type="text" required wire:model="price1">
+                    @error("price1")
                     <div class="text-danger">{{$message}}</div>
                     @enderror
                 </div>
@@ -191,6 +204,7 @@ new class extends Component
                         <th>category</th>
                         <th>details</th>
                         <th>price</th>
+                        <th>price for small</th>
                         <th>image</th>
                         <th>action</th>
                     </tr>
@@ -204,6 +218,13 @@ new class extends Component
                 <td>{{$p->category->title}}</td>
                 <td>{{$p->details}}</td>
                 <td>{{$p->price." $"}}</td>
+                <td>
+                    @if ($p->price1)
+                     {{ $p->price1." $" }}
+                     @else
+                     null
+                    @endif
+                </td>
                 <td>
                     @if ($p->image)
                   <img src="{{ Storage::url($p->image) }}" width="50" alt=""
