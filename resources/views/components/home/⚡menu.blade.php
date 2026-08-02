@@ -7,7 +7,7 @@ use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 new class extends Component
 {
-    public $category,$product,$class="all",$quantity=[];
+    public $category,$product,$class="all",$quantity=[],$selectedWeight = [];
     //start filter function
     public function filter($id,$title)
     {
@@ -40,14 +40,15 @@ new class extends Component
     }
     //end loadCategory function
     //start add to cart function
-    public function add_cart($product_id)
+    public function add_cart($product_id,$weight)
     {
         if(!Auth::check())
              return redirect()->route('login');
        $this->validate([
         "quantity.$product_id"=>['required', 'integer', 'min:1']
        ]);
-       $cartItem = Cart::where('product_id',$product_id)->where("user_id",Auth::id())->first();
+       $cartItem = Cart::where('product_id',$product_id)->where("user_id",Auth::id())
+       ->where("weight",$weight)->first();
        if(!$cartItem)
         {
              Cart::create(
@@ -55,6 +56,7 @@ new class extends Component
          'user_id' => Auth::id(),
         'product_id' => $product_id,
         'quantity' => $this->quantity[$product_id],
+        'weight'     => $this->selectedWeight[$product_id]??800,
             ]
             );
         }
@@ -71,6 +73,12 @@ new class extends Component
         session()->forget('success');
     }
     //end reset session function
+    //start get price function
+public function getPrice($productId, $weight)
+{
+    $this->selectedWeight[$productId] = $weight;
+}
+    //end get price function
 };
 ?>
 
@@ -115,7 +123,31 @@ new class extends Component
                         <div class="mdesc">{{ $p->details }}</div>
                         <div class="mfoot">
                            <div>
-                              <div class="mprice">{{ $p->price." $" }}</div>
+                              <div class="mprice">
+                                @php
+                                    $weight = $selectedWeight[$p->id] ?? 800;
+                                @endphp
+
+                                @if($weight == 800)
+                                    {{ $p->price }} $
+                                @else
+                                    {{ $p->price1 }} $
+                                @endif
+
+                            </div>
+                              <div>
+                                <button
+    class="hbfiltbtn {{ ($selectedWeight[$p->id] ?? 800) == 800 ? 'active' : '' }}"
+    wire:click="getPrice({{ $p->id }},800)">
+    800g
+</button>
+
+<button
+    class="hbfiltbtn {{ ($selectedWeight[$p->id] ?? 800) == 400 ? 'active' : '' }}"
+    wire:click="getPrice({{ $p->id }},400)">
+    400g
+</button>
+                              </div>
                               <div>
                                   <input type="number"
                             placeholder="الكمية" min="1"
@@ -128,7 +160,7 @@ new class extends Component
 
                            <button class="madd" title="الاضافة الى السلة"
                            wire:loading.attr="disabled"
-                           wire:click="add_cart({{ $p->id }})">
+                           wire:click="add_cart({{ $p->id }},{{ $weight }})">
                             <i class="fas fa-plus"></i>
                         </button>
                         </div>

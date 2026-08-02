@@ -67,13 +67,13 @@ new class extends Component
             OrderItem::create([
              'order_id' => $order->id,
              'product_id' => $item->product_id,
-             'price' => $item->product->price,
+             'price' => $item->weight==800? $item->product->price : $item->product->price1,
              'quantity' => $item->quantity,
             ]);
         $message .= "المنتج: " . $item->product->title . "\n";
         $message .= "الكمية: " . $item->quantity . "\n";
-        $message .= " السعر للمنتج الواحد". $item->product->price. " $\n";
-        $message .= " السعر الاجمالي لهذا المنتج ". ($item->quantity * $item->product->price) . " $\n";
+        $message .= " السعر للمنتج الواحد". $item->weight==800? $item->product->price : $item->product->price1. " $\n";
+        $message .= " السعر الاجمالي لهذا المنتج ". ($item->quantity * ($item->weight==800? $item->product->price : $item->product->price1)) . " $\n";
         $message .= "------------------\n";
             $item->delete();
         }
@@ -117,7 +117,7 @@ new class extends Component
                 </div>
                     <div class="item-info">
                         <div class="item-name">{{ $c->product->title }}</div>
-                        <div class="item-price">{{ $c->product->price." $"}}</div>
+                        <div class="item-price">{{($c->weight==800)? $c->product->price:$c->product->price1." $"}}</div>
                     </div>
                 </div>
                 <div class="quantity-controls">
@@ -126,12 +126,21 @@ new class extends Component
                     <button class="qty-btn" wire:click="update_quantity('+',{{ $c->id }})">+</button>
                 </div>
                 <div class="item-total-section">
-                    <span class="item-total-price">{{ $c->quantity*$c->product->price." $" }}</span>
+                    <span class="item-total-price">
+                        @if($c->weight==800)
+                    {{ $c->quantity*$c->product->price." $" }}
+                    @else
+                    {{ $c->quantity*$c->product->price1." $" }}
+                    @endif
+                </span>
                     <button class="remove-btn" wire:click="delete({{ $c->id }})">Remove</button>
                 </div>
             </div>
             @php
+            if($c->weight==800)
             $total+=($c->quantity*$c->product->price);
+            else
+            $total+=($c->quantity*$c->product->price1);
             @endphp
            @endforeach
 
