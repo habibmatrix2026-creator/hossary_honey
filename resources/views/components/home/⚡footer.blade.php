@@ -17,11 +17,11 @@ new class extends Component
                   <p class="fdesc">
                     14 سنة من الثقة والجودة </p>
                   <div class="fsoc">
-                     <a href="#"><i class="fab fa-facebook-f"></i></a>
-                     <a href="#"><i class="fab fa-instagram"></i></a>
+                     <a href="https://www.facebook.com/Hossari.Honey"><i class="fab fa-facebook-f"></i></a>
+                     {{-- <a href="#"><i class="fab fa-instagram"></i></a>
                      <a href="#"><i class="fab fa-twitter"></i></a>
                      <a href="#"><i class="fab fa-youtube"></i></a>
-                     <a href="#"><i class="fab fa-tiktok"></i></a>
+                     <a href="#"><i class="fab fa-tiktok"></i></a> --}}
                   </div>
                </div>
                <div class="col-sm-6 col-lg-2">
@@ -58,7 +58,7 @@ new class extends Component
          </div>
          <div class="fbot">
             <div class="container">
-               <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+               <div class="flex-wrap gap-2 d-flex justify-content-between align-items-center">
                   <p>&copy 2026 <span>hossary for honey</span>. All Rights Reserved by mustafa habib (HB Matrix)
                </div>
             </div>
