@@ -13,7 +13,8 @@
 --green: #6B7A32;
 --cream: #FFF8E7;
 --cream2: #F5E6C8;
---light: #e6e6e6;
+--light: #171717;
+--black:black;
 
 
   --shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
@@ -30,7 +31,7 @@ html {
 body {
   font-family: "Poppins", sans-serif;
   color: #444;
-  background: #fff;
+  background:var(--black);
   overflow-x: hidden;
 }
 h1,
@@ -48,13 +49,13 @@ a {
 img {
   max-width: 100%;
 }
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 5px;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--primary);
   border-radius: 10px;
-}
+} */
 
 /* ===================== TOP BAR ===================== */
 #topbar {
@@ -99,7 +100,7 @@ img {
 
 /* ===================== NAVBAR ===================== */
 #nav {
-  background: #fff;
+  background: #000000;
   position: sticky;
   top: 0;
   z-index: 990;
@@ -144,7 +145,7 @@ img {
 .navbar-nav .nav-link {
   font-size: 0.87rem;
   font-weight: 500;
-  color: #333 !important;
+  color: hsl(0, 0%, 95%) !important;
   padding: 26px 13px !important;
   position: relative;
 }
@@ -212,6 +213,7 @@ section {
   margin-bottom: 4px;
 }
 .stitle {
+    color: var(--cream);
   font-size: clamp(1.9rem, 4vw, 2.7rem);
   font-weight: 900;
   line-height: 1.2;
@@ -259,7 +261,7 @@ section {
 
 /* ===================== HERO ===================== */
 #hero {
-  background: var(--dark);
+  background: var(--black);
   min-height: 92vh;
   display: flex;
   align-items: center;
@@ -441,7 +443,7 @@ section {
   justify-content: center;
   margin: 0 auto;
   position: relative;
-  box-shadow: 0 28px 76px rgba(232, 40, 26, 0.14);
+  box-shadow: 0 5px 5px var(--secondary);
 }
 .hcircle img {
   width: 100%;
@@ -696,17 +698,17 @@ section {
 
 /* ===================== MENU ===================== */
 #menu {
-  background: var(--light);
+  background: var(--black);
 }
 /* FIX 3 â€” Filter buttons */
 .hbfiltbtn {
-  border: 2px solid #e5e5e5;
-  background: #fff;
+  border: 2px solid var(--secondary);
+  background: var(--black);
   border-radius: 50px;
   padding: 8px 20px;
   font-size: 0.84rem;
   font-weight: 600;
-  color: #666;
+  color: var(--cream);
   cursor: pointer;
   transition: 0.3s;
   margin: 3px;
@@ -726,8 +728,10 @@ section {
   display: none !important;
 }
 .mcard {
-  background: #fff;
+  background:var(--black);
   border-radius: 18px;
+  /* outline: var(--secondary) 1px solid; */
+   border: 2px solid var(--secondary);
   overflow: hidden;
   transition: 0.4s;
   box-shadow: 0 4px 22px rgba(0, 0, 0, 0.07);
@@ -797,20 +801,21 @@ section {
 .mcat {
   font-size: 0.7rem;
   font-weight: 600;
-  color: var(--secondary);
+  color: var(--cream);
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 5px;
 }
 .mtit {
-  font-size: 1.05rem;
-  font-weight: 700;
+    color: var(--secondary);
+  font-size: 1.09rem;
+  font-weight:900;
   margin-bottom: 5px;
   font-family: "Playfair Display", serif;
 }
 .mdesc {
   font-size: 0.78rem;
-  color: #aaa;
+  color: var(--cream);
   margin-bottom: 13px;
   line-height: 1.5;
 }
@@ -1707,7 +1712,7 @@ section {
 
 /* ===================== FOOTER ===================== */
 footer {
-  background: var(--dark);
+  background: var(--black);
   padding: 68px 0 0;
 }
 .fnm {
