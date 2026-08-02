@@ -29,7 +29,7 @@ RUN apt-get update \
 RUN npm ci
 RUN npm run build
 
-RUN php artisan storage:link || true
+
 
 RUN mkdir -p storage/framework/{cache,sessions,views} bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
